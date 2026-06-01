@@ -103,14 +103,7 @@ public class AzureStorageService extends AbstractStorageService {
      * This replaces only %2F with '/', leaving all other percent-encoded characters
      */
     private String decodeBlobUrl(String url) {
-        try {
-            java.net.URI uri = new java.net.URI(url);
-            String path = uri.getRawPath().replace("%2F", "/").replace("%2f", "/");
-            String result = uri.getScheme() + "://" + uri.getRawAuthority() + path;
-            return uri.getRawQuery() != null ? result + "?" + uri.getRawQuery() : result;
-        } catch (java.net.URISyntaxException e) {
-            return url;
-        }
+        return url.replace("%2F", "/").replace("%2f", "/");
     }
 
     @Override
