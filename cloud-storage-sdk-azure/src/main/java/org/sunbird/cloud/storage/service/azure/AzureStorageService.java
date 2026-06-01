@@ -26,6 +26,7 @@ import org.sunbird.cloud.storage.exception.StorageServiceException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -239,7 +240,7 @@ public class AzureStorageService extends AbstractStorageService {
         try {
             BlobClient sourceBlobClient = getBlobClient(fromContainer, fromKey);
             BlobClient destBlobClient = getBlobClient(toContainer, toKey);
-            destBlobClient.beginCopy(decodeBlobUrl(sourceBlobClient.getBlobUrl()), null);
+            destBlobClient.beginCopy(decodeBlobUrl(sourceBlobClient.getBlobUrl()), null).waitForCompletion(Duration.ofMinutes(10));
         } catch (Exception e) {
             throw new StorageServiceException(
                     "Failed to copy object from " + fromContainer + "/" + fromKey
