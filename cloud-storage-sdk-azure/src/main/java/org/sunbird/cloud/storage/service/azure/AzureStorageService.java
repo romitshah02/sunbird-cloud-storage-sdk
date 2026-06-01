@@ -239,7 +239,7 @@ public class AzureStorageService extends AbstractStorageService {
         try {
             BlobClient sourceBlobClient = getBlobClient(fromContainer, fromKey);
             BlobClient destBlobClient = getBlobClient(toContainer, toKey);
-            destBlobClient.copyFromUrl(decodeBlobUrl(sourceBlobClient.getBlobUrl()));
+            destBlobClient.beginCopy(decodeBlobUrl(sourceBlobClient.getBlobUrl()), null);
         } catch (Exception e) {
             throw new StorageServiceException(
                     "Failed to copy object from " + fromContainer + "/" + fromKey
